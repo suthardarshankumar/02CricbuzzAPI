@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 const ResultsByDate = () => {
     const [selectedDate, setSelectedDate] = useState('');
@@ -23,11 +23,11 @@ const ResultsByDate = () => {
         } catch (error) {
             console.error(error);
         }
-    }, [selectedDate]); // Memoize the function with selectedDate as dependency
+    }, [selectedDate]);
 
     useEffect(() => {
         fetchResultsDataByDate();
-    }, [fetchResultsDataByDate]); // Call fetchResultsDataByDate when it changes
+    }, [fetchResultsDataByDate]);
 
     const handleDateChange = (e) => {
         setSelectedDate(e.target.value);
@@ -43,7 +43,7 @@ const ResultsByDate = () => {
                     onChange={handleDateChange}
                 />
             </div>
-            {matches.length > 0 && (
+            {matches && matches.length > 0 && (
                 <div>
                     <table className="table-fixed w-full text-slate-50 mt-20">
                         <thead className='border-b'>
@@ -56,13 +56,13 @@ const ResultsByDate = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {matches.map(match => (
-                                <tr key={match.id} className='hover:text-slate-900 hover:bg-slate-50'>
-                                    <td className='p-4'>{match.away.name}</td>
-                                    <td className='p-4'>{match.home.name}</td>
-                                    <td className='p-4'>{match.match_subtitle}</td>
-                                    <td className='p-4'>{match.venue}</td>
-                                    <td className='p-4'>{match.result}</td>
+                            {matches.map(({ id, away, home, match_subtitle, venue, result }) => (
+                                <tr key={id} className='hover:text-slate-900 hover:bg-slate-50'>
+                                    <td className='p-4'>{away.name}</td>
+                                    <td className='p-4'>{home.name}</td>
+                                    <td className='p-4'>{match_subtitle}</td>
+                                    <td className='p-4'>{venue}</td>
+                                    <td className='p-4'>{result}</td>
                                 </tr>
                             ))}
                         </tbody>
