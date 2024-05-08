@@ -23,11 +23,11 @@ const ResultsByDate = () => {
         } catch (error) {
             console.error(error);
         }
-    }, [selectedDate]);
+    }, [selectedDate]); // Memoize the function with selectedDate as dependency
 
     useEffect(() => {
         fetchResultsDataByDate();
-    }, [fetchResultsDataByDate]);
+    }, [fetchResultsDataByDate]); // Call fetchResultsDataByDate when it changes
 
     const handleDateChange = (e) => {
         setSelectedDate(e.target.value);
