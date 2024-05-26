@@ -4,8 +4,8 @@ import { Route, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
 import ResultsByDate from './Components/ResultsByDate.jsx'
-import ICCPlayerRanking from './Components/ICCPlayerRanking.jsx'
-import PlayerStat from './Components/PlayerStat.jsx'
+import ICCPlayerRanking, { iccPlayerRankingLoader } from './Components/ICCPlayerRanking.jsx'
+import PlayerStat, { playerStatLoader } from './Components/PlayerStat.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,10 +19,12 @@ const router = createBrowserRouter([
       {
         path: 'icc-player-ranking',
         element: <ICCPlayerRanking />,
+        loader: iccPlayerRankingLoader,
       },
       {
         path: 'player-stats',
         element: <PlayerStat />,
+        loader: playerStatLoader,
       }
     ],
   }])

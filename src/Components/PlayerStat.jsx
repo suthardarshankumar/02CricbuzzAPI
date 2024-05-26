@@ -1,9 +1,28 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useLoaderData } from 'react-router-dom';
+
+export const playerStatLoader = async () => {
+    const playerID = 1413;
+    const playerType = 'batting';
+    const url = `https://cricbuzz-cricket.p.rapidapi.com/stats/v1/player/${playerID}/${playerType}`;
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '4d1d17eb4bmsh0eced130bef1d07p11b314jsnbdce77625305',
+            'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
+        }
+    };
+
+    const response = await fetch(url, options);
+    const result = await response.json;
+    return { playerID, playerType, data: result };
+}
 
 const PlayerStat = () => {
-    const [playerID, setPlayerID] = useState(1413);
-    const [playerType, setPlayerType] = useState('');
-    const [playerStatsData, setPlayerStatsData] = useState(null);
+    const loader = useLoaderData();
+    const [playerID, setPlayerID] = useState(loader.playerID);
+    const [playerType, setPlayerType] = useState(loader.playerType);
+    const [playerStatsData, setPlayerStatsData] = useState(loader.data);
 
     const handlePlayerID = (e) => {
         setPlayerID(e.target.value);

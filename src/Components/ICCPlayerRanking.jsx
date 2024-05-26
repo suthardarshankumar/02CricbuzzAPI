@@ -1,8 +1,26 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useLoaderData } from 'react-router-dom';
+
+export const iccPlayerRankingLoader = async () => {
+    const matchType = 'test'; // Default match type
+    const url = `https://cricbuzz-cricket.p.rapidapi.com/stats/v1/rankings/batsmen?formatType=${matchType}`;
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '4d1d17eb4bmsh0eced130bef1d07p11b314jsnbdce77625305',
+            'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
+        }
+    };
+
+    const response = await fetch(url, options);
+    const resultData = await response.json();
+    return { matchType, data: resultData.rank || [] };
+};
 
 const ICCPlayerRanking = () => {
-    const [matchType, setMatchType] = useState('');
-    const [playerRank, setPlayerRank] = useState([]);
+    const loaderData = useLoaderData();
+    const [matchType, setMatchType] = useState(loaderData.matchType);
+    const [playerRank, setPlayerRank] = useState(loaderData.data);
 
     const handleMatchChange = (e) => {
         setMatchType(e.target.value);
@@ -21,7 +39,6 @@ const ICCPlayerRanking = () => {
         try {
             const response = await fetch(url, options);
             const resultData = await response.json();
-            console.log(resultData);
             if (resultData.rank) {
                 setPlayerRank(resultData.rank);
             } else {
