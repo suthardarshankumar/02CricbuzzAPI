@@ -5,23 +5,27 @@ const ResultsByDate = () => {
     const [matches, setMatches] = useState([]);
 
     const fetchResultsDataByDate = useCallback(async () => {
-        if (!selectedDate) return;
+        if (!selectedDate) {
+            console.warn("No date selected.");
+            return;
+        }
 
         const url = `https://cricket-live-data.p.rapidapi.com/results-by-date/${selectedDate}`;
         const options = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': '4d1d17eb4bmsh0eced130bef1d07p11b314jsnbdce77625305',
-                'X-RapidAPI-Host': 'cricket-live-data.p.rapidapi.com'
+                'x-rapidapi-key': '94a0fe8e3fmshbdfb3b23428c97ap1915dajsnb04a9b956e43',
+                'x-rapidapi-host': 'cricket-live-data.p.rapidapi.com'
             }
         };
 
         try {
             const response = await fetch(url, options);
             const result = await response.json();
-            setMatches(result.results);
+            console.log("API Response:", result);
+            setMatches(result.results || []);
         } catch (error) {
-            console.error(error);
+            console.error("Fetch error:", error);
         }
     }, [selectedDate]);
 
@@ -47,7 +51,7 @@ const ResultsByDate = () => {
                 <div>
                     <table className="table-fixed w-full text-slate-50 mt-20">
                         <thead className='border-b'>
-                            <tr className=''>
+                            <tr>
                                 <th className='p-5'>Away Country</th>
                                 <th className='p-5'>Home Country</th>
                                 <th className='p-5'>Match No</th>

@@ -41,6 +41,7 @@ const ICCPlayerRanking = () => {
             const resultData = await response.json();
             if (resultData.rank) {
                 setPlayerRank(resultData.rank);
+                console.log(resultData.rank)
             } else {
                 setPlayerRank([]);
             }
@@ -77,7 +78,7 @@ const ICCPlayerRanking = () => {
                                 <th className='p-5 text-center'>Rank</th>
                                 <th className='p-5'>Name</th>
                                 <th className='p-5'>Country</th>
-                                <th className='p-5'>Average</th>
+                                {/* <th className='p-5'>Average</th> */}
                                 <th className='p-5'>Rating</th>
                             </tr>
                         </thead>
@@ -87,7 +88,7 @@ const ICCPlayerRanking = () => {
                                     <td className='p-4 text-center'>{player.rank}</td>
                                     <td className='p-4'>{player.name}</td>
                                     <td className='p-4'>{player.country}</td>
-                                    <td className='p-4'>{player.avg}</td>
+                                    {/* <td className='p-4'>{player.avg}</td> */}
                                     <td className='p-4'>{player.rating}</td>
                                 </tr>
                             ))}
